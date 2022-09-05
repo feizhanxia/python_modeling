@@ -1,0 +1,7 @@
+# numpy矩阵运算基础
+# 矩阵与文本文件
+import numpy as np
+data = np.loadtxt('黑枸杞溶出.txt')
+print(data)
+# 矩阵分片
+# 矩阵算数函数 np.exp() math.exp(int)
