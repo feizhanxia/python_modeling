@@ -14,6 +14,8 @@ def loss(X, y, a, b):
     return loss1, temp
 
 
+rng = np.random.default_rng()
+
 # 数据准备
 x1 = [[5.1, 3.5], [4.9, 3.], [4.7, 3.2], [4.6, 3.1], [5., 3.6], [5.4, 3.9],
       [4.6, 3.4], [5., 3.4], [4.4, 2.9], [4.9, 3.1]]
@@ -29,26 +31,28 @@ lr = 1.0
 a = np.random.random(2)
 b = np.random.random()
 
-for k in range(80):
+for k in range(100):
     los, temp = loss(X, y, a, b)
     if los == 0:
         break
     wrongSample = np.argwhere(temp < 0).flatten()
-    j = np.random.randint(0, len(wrongSample))
-    sampleNo = wrongSample[j]
-    a[0] += lr * y[sampleNo] * X[sampleNo][0]
-    a[1] += lr * y[sampleNo] * X[sampleNo][1]
-    b += lr * y[sampleNo]
+    #  j = np.random.randint(0, len(wrongSample))
+    sampleNo = rng.choice(wrongSample,
+                          min(3, len(wrongSample)),
+                          False,
+                          shuffle=False)
+    a[0] += lr * (y[sampleNo] * X[sampleNo, 0]).sum()
+    a[1] += lr * (y[sampleNo] * X[sampleNo, 1]).sum()
+    b += lr * y[sampleNo].sum()
     if k % 10 == 0:
         lr /= 2.0
+
 # 画直线，找2个点，可视化
 xvalue = X[:, 0]  # 二维平面，x0作x轴，x1作y轴
 xmin = min(xvalue)
 xmax = max(xvalue)
 xp = [xmin, xmax]
 yp = [-a[0] / a[1] * xmin - b / a[1], -a[0] / a[1] * xmax - b / a[1]]
-
-#  from pylab import *
 
 cls1x = X[y == -1, 0]  # 第一类样本的x轴坐标,  用y==-1  过滤数据得到
 cls1y = X[y == -1, 1]  # 第一类样本的y轴坐标
