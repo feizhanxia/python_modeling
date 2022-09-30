@@ -26,7 +26,7 @@ class Individual:
     def mutation(self, learnRate):
         son = Individual(self._n)
         son.chromsome = self.chromsome.copy()
-        mutationPos = npr.randint(self._n)  #;//变异的位置
+        mutationPos = npr.randint(self._n)  # //变异的位置
         # 产生一个-0.5-0.5之间的随机小数
         temp = npr.random() - 0.5
         son.chromsome[mutationPos] += learnRate * temp
@@ -79,7 +79,7 @@ class NGA:
         mother = self.population[motherPos]
         son1, son2 = father.crossover(mother)
 
-        son1.eval = self.evalFunc(son1.chromsome)  #;// 评估第一个子代
+        son1.eval = self.evalFunc(son1.chromsome)  # // 评估第一个子代
         son2.eval = self.evalFunc(son2.chromsome)
         self.findBestWorst()
 
@@ -99,15 +99,15 @@ class NGA:
 
     def solve(self):
         shrinkTimes = self.maxIterTime / 10
-        #//将总迭代代数分成10份
-        oneFold = shrinkTimes  #;//每份中包含的次数
+        # //将总迭代代数分成10份
+        oneFold = shrinkTimes  # //每份中包含的次数
         i = 0
         while i < self.maxIterTime:
             print(i, "---", self.maxIterTime)
             if i == shrinkTimes:
                 self.arfa = self.arfa / 2.0
-                #经过一份代数的迭代后，将收敛参数arfa缩小为原来的1/2，以控制mutation
-                shrinkTimes += oneFold  #;//下一份到达的位置
+                # 经过一份代数的迭代后，将收敛参数arfa缩小为原来的1/2，以控制mutation
+                shrinkTimes += oneFold  # //下一份到达的位置
             for j in range(self.crossoverProb):
                 self.crossover()
             for j in range(self.mutationProb):

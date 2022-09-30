@@ -27,7 +27,7 @@ class MLR:
         Y = X @ self.A
         return Y
 
-    def Ftest(self, alpha):  #MLR类的方法
+    def Ftest(self, alpha):  # MLR类的方法
         n = len(self.X)  # 样本数
         k = self.X.shape[-1]  # 获取变量数
         f_arfa = f.isf(alpha, k, n - k - 1)  # f临界值
